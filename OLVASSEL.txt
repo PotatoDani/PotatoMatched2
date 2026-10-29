@@ -1,0 +1,28 @@
+UNMATCHED PAKLIKEZELO - PWA TELEPITESI UTMUTATO
+================================================
+
+1) FELTOLTES GITHUB PAGES-RE (ingyenes, kb. 5 perc)
+   - Menj a github.com-ra, hozz letre egy ingyenes fiokot.
+   - Hozz letre egy uj, PUBLIKUS repository-t (pl. "unmatched").
+   - Kattints: "Add file" > "Upload files", huzd be a ZIP-bol kicsomagolt
+     OSSZES fajlt (index.html, manifest.json, sw.js, 3 db png).
+   - Settings > Pages > Branch: "main" / folder: "/ (root)" > Save.
+   - 1-2 perc mulva eler a cimen:
+        https://FELHASZNALONEVED.github.io/unmatched/
+
+2) TELEPITES A TELEFONRA
+   - Nyisd meg a fenti cimet Chrome-ban (vagy Brave-ben).
+   - Menu (harom pont) > "Alkalmazas telepitese" / "Hozzaadas a kezdokepernyohoz".
+   - Mostantol sajat ikonja van, teljes kepernyon fut.
+
+3) FONTOS
+   - A kartyakepeid es az allasod a TELEFONON, a bongeszo tarolojaban vannak,
+     nem a GitHubon. A repo publikus, de a kepeid nem kerulnek fel oda.
+   - Ha a telepitett appot es a bongeszos verziot is hasznalod, azok kulon
+     tarolot hasznalnak, ne keverd oket.
+   - Ha torlod az app adatait / bongeszo adatait, az elmentett allas elvesz.
+   - Frissites: ha uj verziot toltesz fel, a sw.js elejen a CACHE nevet
+     novelni kell (pl. v1 > v2), kulonben a telefon a regit mutatja.
+
+4) APK (opcionalis)
+   - Ha mar fent van a cimen: pwabuilder.com > add meg a cimet > Android > letoltes.
