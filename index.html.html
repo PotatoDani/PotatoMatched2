@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unmatched Paklikezelő</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .deck-container {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: #f9f9f9;
+            transition: all 0.3s;
+        }
+
+        .deck-container:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .upload-area {
+            border: 3px dashed #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            background: white;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8d4ff;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            width: 100px;
+            height: 140px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hand-area {
+            background: linear-gradient(to bottom, #f0f4ff, white);
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .hand-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .hand-cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            min-height: 160px;
+        }
+
+        .card-in-hand {
+            width: 120px;
+            height: 168px;
+        }
+
+        .empty-message {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-back-section, .ability-section {
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-back-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .ability-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .ability-cards-display {
+            margin-top: 20px;
+            min-height: 180px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-content: flex-start;
+        }
+
+        .ability-card {
+            width: 120px;
+            height: 168px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .ability-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .ability-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ability-card-delete {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .ability-card:hover .ability-card-delete {
+            opacity: 1;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card-back-preview {
+            margin-top: 15px;
+            min-height: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-back-preview img {
+            max-width: 100px;
+            max-height: 140px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .flip-hand-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        .flip-hand-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.5);
+        }
+
+        .card-flipped {
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-flipped img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 3% auto;
+            width: 90%;
+            max-width: 600px;
+            animation: slideIn 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .leave-confirm-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: slideIn 0.3s;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-end-btn {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 18px;
+            background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .game-end-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+        }
+
+        .draw-pile-viewer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 95%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+
+        .draw-pile-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .draw-pile-viewer-header h2 {
+            color: #059669;
+            font-size: 1.3em;
+        }
+
+        .draw-pile-viewer-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: flex-start;
+        }
+
+        .draw-pile-viewer-card {
+            width: 100px;
+            height: 140px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .draw-pile-viewer-card:hover {
+            transform: scale(1.07) translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .draw-pile-viewer-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .draw-pile-card-index {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 0.75em;
+            text-align: center;
+            padding: 3px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-card-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-btn-discard {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-btn-discard:hover {
+            background: #dc2626;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .modal-btn-close {
+            background: #6b7280;
+            color: white;
+        }
+
+        .modal-btn-close:hover {
+            background: #4b5563;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(107, 114, 128, 0.5);
+        }
+
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .close:hover {
+            color: #ef4444;
+            transform: scale(1.2);
+        }
+
+        .modal-nav-left,
+        .modal-nav-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+            transition: all 0.3s;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+        }
+
+        .modal-nav-left { left: 20px; }
+        .modal-nav-right { right: 20px; }
+
+        .modal-nav-left:hover,
+        .modal-nav-right:hover {
+            color: #667eea;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .modal-nav-left.hidden,
+        .modal-nav-right.hidden { display: none; }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.8em; }
+            .card { width: 80px; height: 112px; }
+            .card-in-hand { width: 100px; height: 140px; }
+            .modal-content {
+                width: 100%;
+                margin: 0;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .modal-card-image {
+                width: auto;
+                max-width: 70%;
+                max-height: 60vh;
+                margin: 0 auto;
+            }
+            .modal-buttons { width: 90%; }
+            .modal-btn { padding: 12px 20px; font-size: 0.95em; }
+            .modal-nav-left, .modal-nav-right {
+                font-size: 45px;
+                padding: 10px 8px;
+                z-index: 1002;
+            }
+            .modal-nav-left { left: 2px; }
+            .modal-nav-right { right: 2px; }
+            .close { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎴 Unmatched Paklikezelő</h1>
+        
+        <div class="ability-section">
+            <div class="section-title">⚡ Képességek</div>
+            <div class="upload-area" onclick="document.getElementById('ability-cards-input').click()" 
+                 ondragover="handleDragOver(event)" 
+                 ondragleave="handleDragLeave(event)"
+                 ondrop="handleAbilityCardsDrop(event)">
+                📤 Kattints vagy húzd ide a képesség kártyákat (több kép is)
+                <input type="file" id="ability-cards-input" multiple accept="image/*" onchange="handleAbilityCardsSelect(event)">
+            </div>
+            <div class="ability-cards-display" id="ability-cards-display">
+                <div class="empty-message">Még nincs feltöltött képesség kártya</div>
+            </div>
+        </div>
+
+        <div class="card-back-section">
+            <div class="section-title">🎨 Kártyahátlap Beállítása</div>
+            <div class="upload-area" onclick="document.getElementById('card-back-input').click()" 
+                 ondragover="handleDragOver(event)" 
+                 ondragleave="handleDragLeave(event)"
+                 ondrop="handleCardBackDrop(event)">
+                <span id="card-back-status">📤 Kattints vagy húzd ide a kártyahátlap képet</span>
+                <input type="file" id="card-back-input" accept="image/*" onchange="handleCardBackSelect(event)">
+            </div>
+            <div id="card-back-preview" class="card-back-preview"></div>
+        </div>
+
+        <div id="decks-container"></div>
+
+        <div class="hand-area">
+            <div class="hand-title">🤚 Kezedben Lévő Kártyák</div>
+            <button class="flip-hand-btn" onclick="toggleHandFlip()">
+                🔄 <span id="flip-btn-text">Kártyák Megfordítása</span>
+            </button>
+            <div class="hand-cards" id="hand"></div>
+        </div>
+
+        <button class="game-end-btn" onclick="requestGameEnd()">
+            🏁 JÁTÉK VÉGE
+        </button>
+    </div>
+
+    <!-- Modal for game end confirmation -->
+    <div id="gameEndConfirmModal" class="modal">
+        <div class="leave-confirm-box">
+            <h2 style="color: #333; margin-bottom: 15px;">🏁 Biztosan vége a játéknak?</h2>
+            <p style="color: #666; margin-bottom: 25px;">Ez törli az összes paklit, kezedben lévő és dobópaklibeli kártyát, a kártyahátlapot, valamint a Képességek résznél feltöltött kártyákat is. Ez a művelet nem vonható vissza.</p>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn modal-btn-discard" onclick="confirmGameEnd()">
+                    Igen, törlöm
+                </button>
+                <button class="modal-btn modal-btn-close" onclick="cancelGameEnd()">
+                    Mégse
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for draw pile viewer -->
+    <div id="drawPileModal" class="modal">
+        <div class="draw-pile-viewer">
+            <div class="draw-pile-viewer-header">
+                <h2>🔍 Húzópakli Tartalma</h2>
+                <span class="close" style="position:static; font-size:30px;" onclick="closeDrawPileModal()">&times;</span>
+            </div>
+            <p id="drawPileModalCount" style="color:#666; margin-bottom:15px; text-align:center;"></p>
+            <div id="drawPileModalCards" class="draw-pile-viewer-cards"></div>
+        </div>
+    </div>
+
+    <!-- Modal for discard pile viewer -->
+    <div id="discardPileModal" class="modal">
+        <div class="draw-pile-viewer">
+            <div class="draw-pile-viewer-header">
+                <h2 style="color:#764ba2;">🔍 Dobópakli Tartalma</h2>
+                <span class="close" style="position:static; font-size:30px;" onclick="closeDiscardPileModal()">&times;</span>
+            </div>
+            <p id="discardPileModalCount" style="color:#666; margin-bottom:15px; text-align:center;"></p>
+            <div id="discardPileModalCards" class="draw-pile-viewer-cards"></div>
+        </div>
+    </div>
+
+    <!-- Modal for card preview -->
+    <div id="cardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-nav-left" id="modalNavLeft" onclick="navigateCard(-1)">&#10094;</div>
+            <div class="modal-nav-right" id="modalNavRight" onclick="navigateCard(1)">&#10095;</div>
+            <img id="modalCardImage" class="modal-card-image" src="" alt="Kártya">
+            <div class="modal-buttons" id="modalButtons">
+                <!-- Buttons will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for leave confirmation -->
+    <div id="leaveConfirmModal" class="modal">
+        <div class="leave-confirm-box">
+            <h2 style="color: #333; margin-bottom: 15px;">⚠️ Biztosan elhagyod az oldalt?</h2>
+            <p style="color: #666; margin-bottom: 25px;">Az el nem mentett változások elveszhetnek (frissítés vagy vissza navigálás esetén).</p>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn modal-btn-discard" onclick="confirmLeave()">
+                    Igen, elhagyom
+                </button>
+                <button class="modal-btn modal-btn-close" onclick="cancelLeave()">
+                    Mégse, maradok
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let decks = [];
+        let deckCounter = 0;
+        let history = [];
+        const MAX_HISTORY = 20;
+        let cardBackImage = null;
+        let handFlipped = false;
+        let abilityCards = [];
+
+        const STORAGE_KEY = 'unmatched_deck_manager_state';
+
+        function persistState() {
+            try {
+                const state = {
+                    decks: decks.map(deck => ({
+                        id: deck.id,
+                        name: deck.name,
+                        drawPile: deck.drawPile || [],
+                        discardPile: deck.discardPile || [],
+                        hand: deck.hand || []
+                    })),
+                    deckCounter: deckCounter,
+                    cardBackImage: cardBackImage,
+                    handFlipped: handFlipped,
+                    abilityCards: abilityCards
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (err) {
+                console.error('Mentési hiba (valószínűleg a tárhely betelt):', err);
+            }
+        }
+
+        function loadPersistedState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return false;
+
+                const state = JSON.parse(raw);
+
+                decks = (state.decks || []).map(deck => ({
+                    id: deck.id,
+                    name: deck.name,
+                    drawPile: deck.drawPile || [],
+                    discardPile: deck.discardPile || [],
+                    hand: deck.hand || []
+                }));
+                deckCounter = state.deckCounter || decks.length;
+                cardBackImage = state.cardBackImage || null;
+                handFlipped = state.handFlipped || false;
+                abilityCards = state.abilityCards || [];
+
+                return true;
+            } catch (err) {
+                console.error('Betöltési hiba:', err);
+                return false;
+            }
+        }
+
+        function clearSavedState() {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+
+        function beforeUnloadHandler(e) {
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        }
+        window.addEventListener('beforeunload', beforeUnloadHandler);
+
+        let leaveModalShowing = false;
+        window.history.pushState(null, document.title, location.href);
+        window.addEventListener('popstate', function (e) {
+            window.history.pushState(null, document.title, location.href);
+            if (!leaveModalShowing) {
+                leaveModalShowing = true;
+                document.getElementById('leaveConfirmModal').style.display = 'block';
+            }
+        });
+
+        function confirmLeave() {
+            leaveModalShowing = false;
+            document.getElementById('leaveConfirmModal').style.display = 'none';
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+            window.history.go(-2);
+        }
+
+        function cancelLeave() {
+            leaveModalShowing = false;
+            document.getElementById('leaveConfirmModal').style.display = 'none';
+        }
+
+        function requestGameEnd() {
+            document.getElementById('gameEndConfirmModal').style.display = 'block';
+        }
+
+        function cancelGameEnd() {
+            document.getElementById('gameEndConfirmModal').style.display = 'none';
+        }
+
+        function confirmGameEnd() {
+            document.getElementById('gameEndConfirmModal').style.display = 'none';
+            clearSavedState();
+            history = [];
+            decks = [];
+            cardBackImage = null;
+            abilityCards = [];
+
+            const newDeck = createDeck();
+            decks.push(newDeck);
+
+            renderDecks();
+            renderHand();
+            renderAbilityCards();
+
+            document.getElementById('card-back-status').textContent = '📤 Kattints vagy húzd ide a kártyahátlap képet';
+            document.getElementById('card-back-preview').innerHTML = '';
+        }
+
+        function saveState() {
+            const state = {
+                decks: decks.map(deck => ({
+                    id: deck.id,
+                    name: deck.name,
+                    drawPile: [...deck.drawPile],
+                    discardPile: [...deck.discardPile],
+                    hand: deck.hand ? [...deck.hand] : []
+                }))
+            };
+            history.push(state);
+            if (history.length > MAX_HISTORY) {
+                history.shift();
+            }
+        }
+
+        function undoLastAction() {
+            if (history.length === 0) {
+                alert('Nincs mit visszavonni!');
+                return;
+            }
+            const previousState = history.pop();
+            decks = previousState.decks.map(deck => ({
+                id: deck.id,
+                name: deck.name,
+                drawPile: [...deck.drawPile],
+                discardPile: [...deck.discardPile],
+                hand: deck.hand ? [...deck.hand] : []
+            }));
+            renderDecks();
+            renderHand();
+        }
+
+        function createDeck() {
+            return {
+                id: ++deckCounter,
+                name: `Pakli ${deckCounter}`,
+                drawPile: [],
+                discardPile: []
+            };
+        }
+
+        function renderDecks() {
+            const container = document.getElementById('decks-container');
+            container.innerHTML = '';
+
+            decks.forEach(deck => {
+                const deckDiv = document.createElement('div');
+                deckDiv.className = 'deck-container';
+                deckDiv.innerHTML = `
+                    <div class="upload-area" onclick="document.getElementById('file-input-${deck.id}').click()" 
+                         ondragover="handleDragOver(event)" 
+                         ondragleave="handleDragLeave(event)"
+                         ondrop="handleDrop(event, ${deck.id})">
+                        📤 Kattints vagy húzd ide a kártyaképeket
+                        <input type="file" id="file-input-${deck.id}" multiple accept="image/*" 
+                               onchange="handleFileSelect(event, ${deck.id})">
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn btn-primary" onclick="shuffleDrawPile(${deck.id})">🔀 Húzópakli Keverése</button>
+                        <button class="btn" style="background: #06b6d4; color: white;" onclick="revealTopCard(${deck.id})">👁️ Felső Kártya Felfedése</button>
+                        <button class="btn" style="background: #0891b2; color: white;" onclick="revealBottomCard(${deck.id})">👁️ Alsó Kártya Felfedése</button>
+                        <button class="btn" style="background: #059669; color: white;" onclick="viewDrawPile(${deck.id})">🔍 Húzópakli Megtekintése</button>
+                        <button class="btn" style="background: #764ba2; color: white;" onclick="viewDiscardPile(${deck.id})">🔍 Dobópakli Megtekintése</button>
+                        <button class="btn btn-success" onclick="drawCard(${deck.id})">🎴 Kártya Húzása</button>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn" style="background: #8b5cf6; color: white;" onclick="undoLastAction()" id="undo-btn-${deck.id}">
+                            ↶ Visszavonás
+                        </button>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Húzópakliban</div>
+                            <div class="stat-value" id="draw-count-${deck.id}">${deck.drawPile.length}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dobópakliban</div>
+                            <div class="stat-value" id="discard-count-${deck.id}">${deck.discardPile.length}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(deckDiv);
+                renderDeck(deck);
+            });
+        }
+
+        function renderDeck(deck) {
+            updateStats(deck);
+            persistState();
+        }
+
+        function viewDiscardPile(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.discardPile.length === 0) {
+                alert('Nincs kártya a dobópakliban!');
+                return;
+            }
+            renderDiscardPileModal(deck);
+            document.getElementById('discardPileModal').style.display = 'block';
+        }
+
+        function renderDiscardPileModal(deck) {
+            const count = deck.discardPile.length;
+            document.getElementById('discardPileModalCount').textContent = `${count} kártya — kattints egyre a kezeléshez`;
+
+            const container = document.getElementById('discardPileModalCards');
+            container.innerHTML = '';
+
+            deck.discardPile.forEach((cardImg, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'draw-pile-viewer-card';
+                cardDiv.innerHTML = `
+                    <img src="${cardImg}" alt="Kártya">
+                    <div class="draw-pile-card-index">${index + 1}. lap</div>
+                `;
+                cardDiv.onclick = () => {
+                    closeDiscardPileModal();
+                    showDiscardCardModal(deck.id, index, cardImg, true);
+                };
+                container.appendChild(cardDiv);
+            });
+        }
+
+        function closeDiscardPileModal() {
+            document.getElementById('discardPileModal').style.display = 'none';
+        }
+
+        function renderHand() {
+            persistState();
+            const handDiv = document.getElementById('hand');
+            const allCards = [];
+            
+            decks.forEach(deck => {
+                if (deck.hand) {
+                    deck.hand.forEach(card => {
+                        allCards.push({ deckId: deck.id, cardImg: card });
+                    });
+                }
+            });
+
+            if (allCards.length === 0) {
+                handDiv.innerHTML = '<div class="empty-message">Nincs kártya a kezedben</div>';
+                return;
+            }
+
+            handDiv.innerHTML = '';
+            allCards.forEach(({ deckId, cardImg }) => {
+                const card = document.createElement('div');
+                card.className = 'card card-in-hand';
+                
+                if (handFlipped) {
+                    card.classList.add('card-flipped');
+                    if (cardBackImage) {
+                        card.innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap">`;
+                    } else {
+                        card.style.background = 'black';
+                    }
+                } else {
+                    card.innerHTML = `<img src="${cardImg}" alt="Kártya">`;
+                }
+                
+                card.onclick = () => showCardModal(deckId, cardImg);
+                handDiv.appendChild(card);
+            });
+        }
+
+        function toggleHandFlip() {
+            handFlipped = !handFlipped;
+            const btnText = document.getElementById('flip-btn-text');
+            btnText.textContent = handFlipped ? 'Kártyák Visszafordítása' : 'Kártyák Megfordítása';
+            renderHand();
+            persistState();
+        }
+
+        let currentModalCard = null;
+        let currentHandIndex = -1;
+        let handCards = [];
+        let modalCardFlipped = false;
+
+        function getCardBackSvg() {
+            return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="420"><rect width="300" height="420" fill="black"/></svg>';
+        }
+
+        function updateModalImageSrc() {
+            const modalImage = document.getElementById('modalCardImage');
+            if (modalCardFlipped) {
+                modalImage.src = cardBackImage || getCardBackSvg();
+            } else {
+                modalImage.src = currentModalCard.cardImg;
+            }
+        }
+
+        function showCardModal(deckId, cardImg) {
+            handCards = [];
+            decks.forEach(deck => {
+                if (deck.hand) {
+                    deck.hand.forEach(card => {
+                        handCards.push({ deckId: deck.id, cardImg: card });
+                    });
+                }
+            });
+
+            currentHandIndex = handCards.findIndex(c => c.deckId === deckId && c.cardImg === cardImg);
+            currentModalCard = { deckId, cardImg, source: 'hand' };
+            
+            // Ha a kéz le van fordítva, lefordítva nyitjuk meg
+            modalCardFlipped = handFlipped;
+            updateModalImageSrc();
+            
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn" style="background: #ec4899; color: white;" onclick="flipModalCard()">
+                    🔄 Kártya Megfordítása
+                </button>
+                <button class="modal-btn modal-btn-close" onclick="closeModal()">
+                    ↩️ Vissza a Kézbe
+                </button>
+                <button class="modal-btn modal-btn-discard" onclick="discardModalCard()">
+                    🗂️ Dobópaklira Rakom
+                </button>
+                <button class="modal-btn" style="background: #f59e0b; color: white;" onclick="shuffleHandBackToDraw('top')">
+                    🔝 Húzópakli Tetejére
+                </button>
+                <button class="modal-btn" style="background: #d97706; color: white;" onclick="shuffleHandBackToDraw('bottom')">
+                    ⏬ Húzópakli Aljára
+                </button>
+                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleHandToDrawRandom()">
+                    🔀 Húzópakliba Keverem
+                </button>
+            `;
+            
+            updateNavigationArrows();
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function flipModalCard() {
+            if (!currentModalCard || currentModalCard.source !== 'hand') return;
+            modalCardFlipped = !modalCardFlipped;
+            updateModalImageSrc();
+        }
+
+        function updateNavigationArrows() {
+            const leftArrow = document.getElementById('modalNavLeft');
+            const rightArrow = document.getElementById('modalNavRight');
+            
+            if (currentModalCard && currentModalCard.source === 'hand') {
+                leftArrow.classList.toggle('hidden', currentHandIndex <= 0);
+                rightArrow.classList.toggle('hidden', currentHandIndex >= handCards.length - 1);
+            } else {
+                leftArrow.classList.add('hidden');
+                rightArrow.classList.add('hidden');
+            }
+        }
+
+        function navigateCard(direction) {
+            if (!currentModalCard || currentModalCard.source !== 'hand') return;
+            
+            const newIndex = currentHandIndex + direction;
+            if (newIndex < 0 || newIndex >= handCards.length) return;
+            
+            currentHandIndex = newIndex;
+            const { deckId, cardImg } = handCards[currentHandIndex];
+            
+            currentModalCard = { deckId, cardImg, source: 'hand' };
+            // modalCardFlipped értéke nem változik, megőrizzük a megfordítottság állapotát
+            updateModalImageSrc();
+            updateNavigationArrows();
+        }
+
+        function showDiscardCardModal(deckId, cardIndex, cardImg, fromViewer = false) {
+            currentModalCard = { deckId, cardIndex, cardImg, source: 'discard', fromViewer };
+            document.getElementById('modalCardImage').src = cardImg;
+            
+            const backBtn = fromViewer
+                ? `<button class="modal-btn modal-btn-close" onclick="backToDiscardPileViewer()">↩️ Vissza a Listához</button>`
+                : `<button class="modal-btn modal-btn-close" onclick="closeModal()">↩️ Marad a Dobópakliban</button>`;
+
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn" style="background: #10b981; color: white;" onclick="moveDiscardToHand()">
+                    🤚 Kézbe Veszem
+                </button>
+                <button class="modal-btn" style="background: #f59e0b; color: white;" onclick="shuffleDiscardBackToDraw('top')">
+                    🔝 Húzópakli Tetejére
+                </button>
+                <button class="modal-btn" style="background: #d97706; color: white;" onclick="shuffleDiscardBackToDraw('bottom')">
+                    ⏬ Húzópakli Aljára
+                </button>
+                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleDiscardBackToDraw('random')">
+                    🔀 Húzópakliba Keverem
+                </button>
+                ${backBtn}
+            `;
+
+            document.getElementById('modalNavLeft').classList.add('hidden');
+            document.getElementById('modalNavRight').classList.add('hidden');
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function backToDiscardPileViewer() {
+            const { deckId } = currentModalCard;
+            closeModal();
+            viewDiscardPile(deckId);
+        }
+
+        function closeModal() {
+            document.getElementById('cardModal').style.display = 'none';
+            currentModalCard = null;
+            currentHandIndex = -1;
+            handCards = [];
+            modalCardFlipped = false;
+        }
+
+        function discardModalCard() {
+            if (!currentModalCard || currentModalCard.source !== 'hand') return;
+            
+            const { deckId, cardImg } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || !deck.hand) return;
+
+            const cardIndex = deck.hand.indexOf(cardImg);
+            if (cardIndex > -1) {
+                saveState();
+                deck.hand.splice(cardIndex, 1);
+                deck.discardPile.push(cardImg);
+                renderDeck(deck);
+                renderHand();
+            }
+
+            closeModal();
+        }
+
+        function shuffleHandBackToDraw(position = 'random') {
+            if (!currentModalCard || currentModalCard.source !== 'hand') return;
+            
+            const { deckId, cardImg } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || !deck.hand) return;
+
+            const cardIndex = deck.hand.indexOf(cardImg);
+            if (cardIndex > -1) {
+                saveState();
+                deck.hand.splice(cardIndex, 1);
+                
+                if (position === 'top') {
+                    deck.drawPile.unshift(cardImg);
+                } else if (position === 'bottom') {
+                    deck.drawPile.push(cardImg);
+                } else {
+                    const randomPosition = Math.floor(Math.random() * (deck.drawPile.length + 1));
+                    deck.drawPile.splice(randomPosition, 0, cardImg);
+                }
+                
+                renderDeck(deck);
+                renderHand();
+            }
+
+            closeModal();
+        }
+
+        function shuffleHandToDrawRandom() {
+            shuffleHandBackToDraw('random');
+        }
+
+        function moveDiscardToHand() {
+            if (!currentModalCard || currentModalCard.source !== 'discard') return;
+            
+            const { deckId, cardIndex } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            const card = deck.discardPile.splice(cardIndex, 1)[0];
+            if (card) {
+                if (!deck.hand) deck.hand = [];
+                deck.hand.push(card);
+                renderDeck(deck);
+                renderHand();
+            }
+
+            closeModal();
+        }
+
+        function shuffleDiscardBackToDraw(position = 'random') {
+            if (!currentModalCard || currentModalCard.source !== 'discard') return;
+            
+            const { deckId, cardIndex } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            const card = deck.discardPile.splice(cardIndex, 1)[0];
+            if (card) {
+                if (position === 'top') {
+                    deck.drawPile.unshift(card);
+                } else if (position === 'bottom') {
+                    deck.drawPile.push(card);
+                } else {
+                    const randomPosition = Math.floor(Math.random() * (deck.drawPile.length + 1));
+                    deck.drawPile.splice(randomPosition, 0, card);
+                }
+                renderDeck(deck);
+            }
+
+            closeModal();
+        }
+
+        const cardModalEl = document.getElementById('cardModal');
+        cardModalEl.addEventListener('click', function(event) {
+            if (event.target === this) closeModal();
+        });
+
+        let swipeTouchStartX = 0;
+        let swipeTouchStartY = 0;
+        let swipeTouchMoved = false;
+
+        cardModalEl.addEventListener('touchstart', function(event) {
+            swipeTouchStartX = event.touches[0].clientX;
+            swipeTouchStartY = event.touches[0].clientY;
+            swipeTouchMoved = false;
+        }, { passive: true });
+
+        cardModalEl.addEventListener('touchmove', function(event) {
+            swipeTouchMoved = true;
+        }, { passive: true });
+
+        cardModalEl.addEventListener('touchend', function(event) {
+            const dx = event.changedTouches[0].clientX - swipeTouchStartX;
+            const dy = event.changedTouches[0].clientY - swipeTouchStartY;
+            const absDx = Math.abs(dx);
+            const absDy = Math.abs(dy);
+
+            if (currentModalCard && currentModalCard.source === 'hand' && swipeTouchMoved) {
+                if (absDx > 50 && absDx > absDy) {
+                    if (dx < 0) {
+                        navigateCard(1);
+                    } else {
+                        navigateCard(-1);
+                    }
+                    return;
+                }
+            }
+
+            if (!swipeTouchMoved && event.target === this) {
+                closeModal();
+            }
+        }, { passive: true });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            } else if (event.key === 'ArrowLeft') {
+                navigateCard(-1);
+            } else if (event.key === 'ArrowRight') {
+                navigateCard(1);
+            }
+        });
+
+        function updateStats(deck) {
+            const drawCount = document.getElementById(`draw-count-${deck.id}`);
+            const discardCount = document.getElementById(`discard-count-${deck.id}`);
+            if (drawCount) drawCount.textContent = deck.drawPile.length;
+            if (discardCount) discardCount.textContent = deck.discardPile.length;
+        }
+
+        function handleFileSelect(event, deckId) {
+            const files = event.target.files;
+            loadImages(files, deckId);
+            event.target.value = '';
+        }
+
+        function handleCardBackSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    cardBackImage = e.target.result;
+                    document.getElementById('card-back-status').textContent = '✅ Kártyahátlap feltöltve';
+                    document.getElementById('card-back-preview').innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap" onclick="showCardBackModal()">`;
+                    persistState();
+                };
+                reader.readAsDataURL(file);
+            }
+            event.target.value = '';
+        }
+
+        function handleCardBackDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const file = event.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    cardBackImage = e.target.result;
+                    document.getElementById('card-back-status').textContent = '✅ Kártyahátlap feltöltve';
+                    document.getElementById('card-back-preview').innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap" onclick="showCardBackModal()">`;
+                    persistState();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showCardBackModal() {
+            if (!cardBackImage) return;
+            
+            currentModalCard = { cardImg: cardBackImage, source: 'cardback' };
+            document.getElementById('modalCardImage').src = cardBackImage;
+            
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn modal-btn-close" onclick="closeModal()">
+                    ✕ Bezárás
+                </button>
+            `;
+            
+            document.getElementById('modalNavLeft').classList.add('hidden');
+            document.getElementById('modalNavRight').classList.add('hidden');
+            
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function handleAbilityCardsSelect(event) {
+            const files = event.target.files;
+            loadAbilityCards(files);
+            event.target.value = '';
+        }
+
+        function handleAbilityCardsDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            loadAbilityCards(files);
+        }
+
+        function loadAbilityCards(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        abilityCards.push({
+                            id: Date.now() + Math.random(),
+                            image: e.target.result
+                        });
+                        renderAbilityCards();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function renderAbilityCards() {
+            persistState();
+            const displayDiv = document.getElementById('ability-cards-display');
+            
+            if (abilityCards.length === 0) {
+                displayDiv.innerHTML = '<div class="empty-message">Még nincs feltöltött képesség kártya</div>';
+                return;
+            }
+
+            displayDiv.innerHTML = '';
+            abilityCards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'ability-card';
+                cardDiv.innerHTML = `
+                    <img src="${card.image}" alt="Képesség kártya">
+                    <button class="ability-card-delete" onclick="deleteAbilityCard(${index})" title="Törlés">×</button>
+                `;
+                cardDiv.onclick = (e) => {
+                    if (!e.target.classList.contains('ability-card-delete')) {
+                        showAbilityCardModal(card.image);
+                    }
+                };
+                displayDiv.appendChild(cardDiv);
+            });
+        }
+
+        function deleteAbilityCard(index) {
+            if (confirm('Biztosan törölni szeretnéd ezt a képesség kártyát?')) {
+                abilityCards.splice(index, 1);
+                renderAbilityCards();
+            }
+        }
+
+        function showAbilityCardModal(cardImg) {
+            currentModalCard = { cardImg, source: 'ability' };
+            document.getElementById('modalCardImage').src = cardImg;
+            
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn modal-btn-close" onclick="closeModal()">
+                    ✕ Bezárás
+                </button>
+            `;
+            
+            document.getElementById('modalNavLeft').classList.add('hidden');
+            document.getElementById('modalNavRight').classList.add('hidden');
+            
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(event, deckId) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            loadImages(files, deckId);
+        }
+
+        function loadImages(files, deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        deck.drawPile.push(e.target.result);
+                        renderDeck(deck);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function shuffleDrawPile(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            deck.drawPile = shuffle(deck.drawPile);
+            renderDeck(deck);
+        }
+
+        function revealTopCard(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.drawPile.length === 0) {
+                alert('Nincs kártya a húzópakliban!');
+                return;
+            }
+
+            const topCard = deck.drawPile[0];
+            showRevealedCardModal(deckId, topCard, 'top');
+        }
+
+        function revealBottomCard(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.drawPile.length === 0) {
+                alert('Nincs kártya a húzópakliban!');
+                return;
+            }
+
+            const bottomCard = deck.drawPile[deck.drawPile.length - 1];
+            showRevealedCardModal(deckId, bottomCard, 'bottom');
+        }
+
+        function viewDrawPile(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.drawPile.length === 0) {
+                alert('Nincs kártya a húzópakliban!');
+                return;
+            }
+
+            renderDrawPileModal(deck);
+            document.getElementById('drawPileModal').style.display = 'block';
+        }
+
+        function renderDrawPileModal(deck) {
+            const count = deck.drawPile.length;
+            document.getElementById('drawPileModalCount').textContent = `${count} kártya — kattints egyre a kezeléshez`;
+
+            const container = document.getElementById('drawPileModalCards');
+            container.innerHTML = '';
+
+            deck.drawPile.forEach((cardImg, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'draw-pile-viewer-card';
+                cardDiv.innerHTML = `
+                    <img src="${cardImg}" alt="Kártya">
+                    <div class="draw-pile-card-index">${index + 1}. lap</div>
+                `;
+                cardDiv.onclick = () => {
+                    closeDrawPileModal();
+                    showDrawPileCardModal(deck.id, index, cardImg);
+                };
+                container.appendChild(cardDiv);
+            });
+        }
+
+        function closeDrawPileModal() {
+            document.getElementById('drawPileModal').style.display = 'none';
+        }
+
+        function showDrawPileCardModal(deckId, cardIndex, cardImg) {
+            currentModalCard = { deckId, cardIndex, cardImg, source: 'drawpile' };
+            document.getElementById('modalCardImage').src = cardImg;
+
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn" style="background: #10b981; color: white;" onclick="drawPileCardToHand()">
+                    🤚 Kézbe Veszem
+                </button>
+                <button class="modal-btn modal-btn-discard" onclick="drawPileCardToDiscard()">
+                    🗂️ Dobópakli Tetejére
+                </button>
+                <button class="modal-btn" style="background: #f59e0b; color: white;" onclick="drawPileCardToPosition('top')">
+                    🔝 Húzópakli Tetejére
+                </button>
+                <button class="modal-btn" style="background: #d97706; color: white;" onclick="drawPileCardToPosition('bottom')">
+                    ⏬ Húzópakli Aljára
+                </button>
+                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="drawPileCardToPosition('random')">
+                    🔀 Véletlenszerűen Vissza
+                </button>
+                <button class="modal-btn modal-btn-close" onclick="backToDrawPileViewer()">
+                    ↩️ Vissza a Listához
+                </button>
+            `;
+
+            document.getElementById('modalNavLeft').classList.add('hidden');
+            document.getElementById('modalNavRight').classList.add('hidden');
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function drawPileCardToHand() {
+            if (!currentModalCard || currentModalCard.source !== 'drawpile') return;
+
+            const { deckId, cardIndex } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            const card = deck.drawPile.splice(cardIndex, 1)[0];
+            if (!deck.hand) deck.hand = [];
+            deck.hand.push(card);
+            renderDeck(deck);
+            renderHand();
+            closeModal();
+        }
+
+        function drawPileCardToDiscard() {
+            if (!currentModalCard || currentModalCard.source !== 'drawpile') return;
+
+            const { deckId, cardIndex } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            const card = deck.drawPile.splice(cardIndex, 1)[0];
+            deck.discardPile.push(card);
+            renderDeck(deck);
+            closeModal();
+        }
+
+        function drawPileCardToPosition(position) {
+            if (!currentModalCard || currentModalCard.source !== 'drawpile') return;
+
+            const { deckId, cardIndex } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck) return;
+
+            saveState();
+            const card = deck.drawPile.splice(cardIndex, 1)[0];
+
+            if (position === 'top') {
+                deck.drawPile.unshift(card);
+            } else if (position === 'bottom') {
+                deck.drawPile.push(card);
+            } else {
+                const randomPos = Math.floor(Math.random() * (deck.drawPile.length + 1));
+                deck.drawPile.splice(randomPos, 0, card);
+            }
+
+            renderDeck(deck);
+            closeModal();
+        }
+
+        function backToDrawPileViewer() {
+            const { deckId } = currentModalCard;
+            closeModal();
+            viewDrawPile(deckId);
+        }
+
+        function showRevealedCardModal(deckId, cardImg, position) {
+            currentModalCard = { deckId, cardImg, source: 'revealed', position: position };
+            document.getElementById('modalCardImage').src = cardImg;
+            
+            const buttonsDiv = document.getElementById('modalButtons');
+            buttonsDiv.innerHTML = `
+                <button class="modal-btn modal-btn-discard" onclick="moveRevealedToDiscard()">
+                    🗂️ Dobópakli Tetejére
+                </button>
+                <button class="modal-btn" style="background: #06b6d4; color: white;" onclick="returnRevealedToDrawPile()">
+                    ↩️ Vissza a Húzópakliba
+                </button>
+            `;
+            
+            document.getElementById('modalNavLeft').classList.add('hidden');
+            document.getElementById('modalNavRight').classList.add('hidden');
+            
+            document.getElementById('cardModal').style.display = 'block';
+        }
+
+        function moveRevealedToDiscard() {
+            if (!currentModalCard || currentModalCard.source !== 'revealed') return;
+            
+            const { deckId, position } = currentModalCard;
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.drawPile.length === 0) return;
+
+            saveState();
+            let card;
+            if (position === 'top') {
+                card = deck.drawPile.shift();
+            } else {
+                card = deck.drawPile.pop();
+            }
+            deck.discardPile.push(card);
+            renderDeck(deck);
+            closeModal();
+        }
+
+        function returnRevealedToDrawPile() {
+            closeModal();
+        }
+
+        function shuffle(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function drawCard(deckId) {
+            const deck = decks.find(d => d.id === deckId);
+            if (!deck || deck.drawPile.length === 0) {
+                alert('Nincs több kártya a húzópakliban!');
+                return;
+            }
+
+            saveState();
+            const card = deck.drawPile.shift();
+            if (!deck.hand) deck.hand = [];
+            deck.hand.push(card);
+            
+            renderDeck(deck);
+            renderHand();
+        }
+
+        const hasSavedState = loadPersistedState();
+        if (!hasSavedState || decks.length === 0) {
+            const deck = createDeck();
+            decks.push(deck);
+        }
+        renderDecks();
+        renderHand();
+        renderAbilityCards();
+        if (cardBackImage) {
+            document.getElementById('card-back-status').textContent = '✅ Kártyahátlap feltöltve';
+            document.getElementById('card-back-preview').innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap" onclick="showCardBackModal()">`;
+        }
+    </script>
+</body>
+</html>
