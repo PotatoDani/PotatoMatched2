@@ -574,16 +574,56 @@
             h1 { font-size: 1.8em; }
             .card { width: 80px; height: 112px; }
             .card-in-hand { width: 100px; height: 140px; }
+
+            /* Telefonon a paklikezelő műveleti gombjai két oszlopban jelenjenek meg. */
+            .controls {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            .controls .btn {
+                width: 100%;
+                min-width: 0;
+                min-height: 48px;
+                margin: 0;
+                padding: 10px 8px;
+                font-size: 0.9em;
+                line-height: 1.2;
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+
+            /* A kártya megnyitásakor megjelenő műveletek is mindig kétoszloposak. */
             .modal-content {
-                width: 92%;
+                width: calc(100% - 28px);
+                max-width: 500px;
                 margin: 0 auto;
                 position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            .modal-buttons {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+                width: 100%;
+                margin-top: 12px;
+            }
+            .modal-buttons .modal-btn {
+                width: 100%;
+                min-width: 0;
+                min-height: 48px;
+                margin: 0;
+                padding: 10px 6px;
+                font-size: 0.82em;
+                line-height: 1.2;
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
             .modal-card-image {
-                max-height: 50vh;
+                max-height: 43vh;
             }
             .modal-nav-left, .modal-nav-right {
                 font-size: 40px;
@@ -593,6 +633,15 @@
             .modal-nav-left { left: -10px; }
             .modal-nav-right { right: -10px; }
             .close { top: -30px; right: 0; }
+        }
+
+        @media (max-width: 380px) {
+            .container { padding: 10px; }
+            .controls .btn,
+            .modal-buttons .modal-btn {
+                font-size: 0.76em;
+                padding: 9px 4px;
+            }
         }
     </style>
 </head>
