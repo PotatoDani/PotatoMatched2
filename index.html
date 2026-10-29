@@ -48,29 +48,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .deck-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .deck-title {
-            font-size: 1.5em;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .deck-count {
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-
         .upload-area {
             border: 3px dashed #ccc;
             border-radius: 10px;
@@ -118,17 +95,6 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-secondary {
-            background: #764ba2;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #63408a;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
-        }
-
         .btn-success {
             background: #10b981;
             color: white;
@@ -140,101 +106,11 @@
             box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
         }
 
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
-        }
-
         .controls {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             margin-bottom: 15px;
-        }
-
-        .cards-area {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .pile {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .discard-pile-container {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .discard-pile-toggle {
-            background: #764ba2;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            width: 100%;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-            margin-bottom: 10px;
-        }
-
-        .discard-pile-toggle:hover {
-            background: #63408a;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
-        }
-
-        .discard-pile-toggle-icon {
-            transition: transform 0.3s;
-        }
-
-        .discard-pile-toggle-icon.open {
-            transform: rotate(180deg);
-        }
-
-        .discard-pile-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .discard-pile-content.open {
-            max-height: 2000px;
-            transition: max-height 0.5s ease-in;
-        }
-
-        .pile-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 1.1em;
-        }
-
-        .pile-cards {
-            min-height: 150px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            background: white;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-content: flex-start;
         }
 
         .card {
@@ -258,18 +134,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .card-back {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.8em;
-            text-align: center;
-            padding: 5px;
         }
 
         .hand-area {
@@ -306,20 +170,19 @@
             text-align: center;
         }
 
-        .card-back-section {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .card-back-section, .ability-section {
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 30px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
+        .card-back-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
         .ability-section {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
         .ability-cards-display {
@@ -381,11 +244,6 @@
             opacity: 1;
         }
 
-        .ability-card-delete:hover {
-            background: #dc2626;
-            transform: scale(1.1);
-        }
-
         .section-title {
             font-size: 1.3em;
             color: white;
@@ -409,11 +267,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .card-back-preview img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
         .flip-hand-btn {
@@ -698,13 +551,8 @@
             z-index: 1001;
         }
 
-        .modal-nav-left {
-            left: 20px;
-        }
-
-        .modal-nav-right {
-            right: 20px;
-        }
+        .modal-nav-left { left: 20px; }
+        .modal-nav-right { right: 20px; }
 
         .modal-nav-left:hover,
         .modal-nav-right:hover {
@@ -713,29 +561,13 @@
         }
 
         .modal-nav-left.hidden,
-        .modal-nav-right.hidden {
-            display: none;
-        }
+        .modal-nav-right.hidden { display: none; }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .card {
-                width: 80px;
-                height: 112px;
-            }
-
-            .card-in-hand {
-                width: 100px;
-                height: 140px;
-            }
-
+            .container { padding: 15px; }
+            h1 { font-size: 1.8em; }
+            .card { width: 80px; height: 112px; }
+            .card-in-hand { width: 100px; height: 140px; }
             .modal-content {
                 width: 100%;
                 margin: 0;
@@ -743,61 +575,25 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
             }
-
             .modal-card-image {
                 width: auto;
                 max-width: 70%;
                 max-height: 60vh;
                 margin: 0 auto;
             }
-
-            .modal-buttons {
-                width: 90%;
-                max-width: none;
-            }
-
-            .modal-btn {
-                padding: 12px 20px;
-                font-size: 0.95em;
-            }
-
-            .modal-nav-left,
-            .modal-nav-right {
-                position: fixed;
-                top: 50%;
-                transform: translateY(-50%);
+            .modal-buttons { width: 90%; }
+            .modal-btn { padding: 12px 20px; font-size: 0.95em; }
+            .modal-nav-left, .modal-nav-right {
                 font-size: 45px;
                 padding: 10px 8px;
                 z-index: 1002;
             }
-
-            .modal-nav-left {
-                left: 2px;
-            }
-
-            .modal-nav-right {
-                right: 2px;
-            }
-
-            .close {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-            }
+            .modal-nav-left { left: 2px; }
+            .modal-nav-right { right: 2px; }
+            .close { top: 10px; right: 10px; }
         }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Unmatched">
-    <link rel="icon" type="image/png" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
     <div class="container">
@@ -975,7 +771,6 @@
             localStorage.removeItem(STORAGE_KEY);
         }
 
-        // Megakadályozza a véletlen frissítést / bezárást / vissza gombot
         function beforeUnloadHandler(e) {
             e.preventDefault();
             e.returnValue = '';
@@ -983,13 +778,10 @@
         }
         window.addEventListener('beforeunload', beforeUnloadHandler);
 
-        // Extra védelem mobil "vissza" gomb ellen, saját felugró ablakkal
         let leaveModalShowing = false;
         window.history.pushState(null, document.title, location.href);
         window.addEventListener('popstate', function (e) {
-            // Mindig visszatesszük az állapotot, hogy ne lépjünk ki
             window.history.pushState(null, document.title, location.href);
-            
             if (!leaveModalShowing) {
                 leaveModalShowing = true;
                 document.getElementById('leaveConfirmModal').style.display = 'block';
@@ -999,7 +791,6 @@
         function confirmLeave() {
             leaveModalShowing = false;
             document.getElementById('leaveConfirmModal').style.display = 'none';
-            // Eltávolítjuk a beforeunload figyelmeztetést, majd visszalépünk
             window.removeEventListener('beforeunload', beforeUnloadHandler);
             window.history.go(-2);
         }
@@ -1009,7 +800,6 @@
             document.getElementById('leaveConfirmModal').style.display = 'none';
         }
 
-        // --- JÁTÉK VÉGE funkció ---
         function requestGameEnd() {
             document.getElementById('gameEndConfirmModal').style.display = 'block';
         }
@@ -1020,11 +810,7 @@
 
         function confirmGameEnd() {
             document.getElementById('gameEndConfirmModal').style.display = 'none';
-
-            // Töröljük a mentett állapotot
             clearSavedState();
-
-            // Visszaállítjuk az alapállapotot teljesen, beleértve a kártyahátlapot és képességeket is
             history = [];
             decks = [];
             cardBackImage = null;
@@ -1037,13 +823,11 @@
             renderHand();
             renderAbilityCards();
 
-            // Kártyahátlap feltöltő mező visszaállítása
             document.getElementById('card-back-status').textContent = '📤 Kattints vagy húzd ide a kártyahátlap képet';
             document.getElementById('card-back-preview').innerHTML = '';
         }
 
         function saveState() {
-            // Deep clone the current state
             const state = {
                 decks: decks.map(deck => ({
                     id: deck.id,
@@ -1053,10 +837,7 @@
                     hand: deck.hand ? [...deck.hand] : []
                 }))
             };
-            
             history.push(state);
-            
-            // Keep only last MAX_HISTORY states
             if (history.length > MAX_HISTORY) {
                 history.shift();
             }
@@ -1067,11 +848,7 @@
                 alert('Nincs mit visszavonni!');
                 return;
             }
-            
-            // Remove current state and restore previous
             const previousState = history.pop();
-            
-            // Restore the state
             decks = previousState.decks.map(deck => ({
                 id: deck.id,
                 name: deck.name,
@@ -1079,7 +856,6 @@
                 discardPile: [...deck.discardPile],
                 hand: deck.hand ? [...deck.hand] : []
             }));
-            
             renderDecks();
             renderHand();
         }
@@ -1142,23 +918,9 @@
         }
 
         function renderDeck(deck) {
-            renderDrawPile(deck);
-            renderDiscardPile(deck);
             updateStats(deck);
             persistState();
         }
-
-        function renderDrawPile(deck) {
-            // No inline display anymore — only update stats
-            updateStats(deck);
-        }
-
-        function renderDiscardPile(deck) {
-            // No inline display anymore — only update stats
-            updateStats(deck);
-        }
-
-        let discardPileViewerDeckId = null;
 
         function viewDiscardPile(deckId) {
             const deck = decks.find(d => d.id === deckId);
@@ -1166,8 +928,6 @@
                 alert('Nincs kártya a dobópakliban!');
                 return;
             }
-
-            discardPileViewerDeckId = deckId;
             renderDiscardPileModal(deck);
             document.getElementById('discardPileModal').style.display = 'block';
         }
@@ -1196,7 +956,6 @@
 
         function closeDiscardPileModal() {
             document.getElementById('discardPileModal').style.display = 'none';
-            discardPileViewerDeckId = null;
         }
 
         function renderHand() {
@@ -1204,7 +963,6 @@
             const handDiv = document.getElementById('hand');
             const allCards = [];
             
-            // Összegyűjtjük az összes kézbeli kártyát minden pakliból
             decks.forEach(deck => {
                 if (deck.hand) {
                     deck.hand.forEach(card => {
@@ -1219,12 +977,11 @@
             }
 
             handDiv.innerHTML = '';
-            allCards.forEach(({ deckId, cardImg }, globalIndex) => {
+            allCards.forEach(({ deckId, cardImg }) => {
                 const card = document.createElement('div');
                 card.className = 'card card-in-hand';
                 
                 if (handFlipped) {
-                    // Show card back
                     card.classList.add('card-flipped');
                     if (cardBackImage) {
                         card.innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap">`;
@@ -1232,7 +989,6 @@
                         card.style.background = 'black';
                     }
                 } else {
-                    // Show card front
                     card.innerHTML = `<img src="${cardImg}" alt="Kártya">`;
                 }
                 
@@ -1244,11 +1000,7 @@
         function toggleHandFlip() {
             handFlipped = !handFlipped;
             const btnText = document.getElementById('flip-btn-text');
-            if (handFlipped) {
-                btnText.textContent = 'Kártyák Visszafordítása';
-            } else {
-                btnText.textContent = 'Kártyák Megfordítása';
-            }
+            btnText.textContent = handFlipped ? 'Kártyák Visszafordítása' : 'Kártyák Megfordítása';
             renderHand();
             persistState();
         }
@@ -1258,8 +1010,20 @@
         let handCards = [];
         let modalCardFlipped = false;
 
+        function getCardBackSvg() {
+            return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="420"><rect width="300" height="420" fill="black"/></svg>';
+        }
+
+        function updateModalImageSrc() {
+            const modalImage = document.getElementById('modalCardImage');
+            if (modalCardFlipped) {
+                modalImage.src = cardBackImage || getCardBackSvg();
+            } else {
+                modalImage.src = currentModalCard.cardImg;
+            }
+        }
+
         function showCardModal(deckId, cardImg) {
-            // Collect all hand cards
             handCards = [];
             decks.forEach(deck => {
                 if (deck.hand) {
@@ -1269,12 +1033,12 @@
                 }
             });
 
-            // Find current card index
             currentHandIndex = handCards.findIndex(c => c.deckId === deckId && c.cardImg === cardImg);
-            
             currentModalCard = { deckId, cardImg, source: 'hand' };
-            modalCardFlipped = false;
-            document.getElementById('modalCardImage').src = cardImg;
+            
+            // Ha a kéz le van fordítva, lefordítva nyitjuk meg
+            modalCardFlipped = handFlipped;
+            updateModalImageSrc();
             
             const buttonsDiv = document.getElementById('modalButtons');
             buttonsDiv.innerHTML = `
@@ -1293,8 +1057,8 @@
                 <button class="modal-btn" style="background: #d97706; color: white;" onclick="shuffleHandBackToDraw('bottom')">
                     ⏬ Húzópakli Aljára
                 </button>
-                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleHandToDiscard()">
-                    🔀 Dobópakliba Keverem
+                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleHandToDrawRandom()">
+                    🔀 Húzópakliba Keverem
                 </button>
             `;
             
@@ -1304,21 +1068,8 @@
 
         function flipModalCard() {
             if (!currentModalCard || currentModalCard.source !== 'hand') return;
-            
             modalCardFlipped = !modalCardFlipped;
-            const modalImage = document.getElementById('modalCardImage');
-            
-            if (modalCardFlipped) {
-                // Show card back
-                if (cardBackImage) {
-                    modalImage.src = cardBackImage;
-                } else {
-                    modalImage.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="420"><rect width="300" height="420" fill="black"/></svg>';
-                }
-            } else {
-                // Show card front
-                modalImage.src = currentModalCard.cardImg;
-            }
+            updateModalImageSrc();
         }
 
         function updateNavigationArrows() {
@@ -1326,20 +1077,9 @@
             const rightArrow = document.getElementById('modalNavRight');
             
             if (currentModalCard && currentModalCard.source === 'hand') {
-                // Show arrows only for hand cards
-                if (currentHandIndex > 0) {
-                    leftArrow.classList.remove('hidden');
-                } else {
-                    leftArrow.classList.add('hidden');
-                }
-                
-                if (currentHandIndex < handCards.length - 1) {
-                    rightArrow.classList.remove('hidden');
-                } else {
-                    rightArrow.classList.add('hidden');
-                }
+                leftArrow.classList.toggle('hidden', currentHandIndex <= 0);
+                rightArrow.classList.toggle('hidden', currentHandIndex >= handCards.length - 1);
             } else {
-                // Hide arrows for discard pile cards
                 leftArrow.classList.add('hidden');
                 rightArrow.classList.add('hidden');
             }
@@ -1355,8 +1095,8 @@
             const { deckId, cardImg } = handCards[currentHandIndex];
             
             currentModalCard = { deckId, cardImg, source: 'hand' };
-            modalCardFlipped = false; // Reset flip state when navigating
-            document.getElementById('modalCardImage').src = cardImg;
+            // modalCardFlipped értéke nem változik, megőrizzük a megfordítottság állapotát
+            updateModalImageSrc();
             updateNavigationArrows();
         }
 
@@ -1379,8 +1119,8 @@
                 <button class="modal-btn" style="background: #d97706; color: white;" onclick="shuffleDiscardBackToDraw('bottom')">
                     ⏬ Húzópakli Aljára
                 </button>
-                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleDiscardWithinDiscard()">
-                    🔀 Dobópakliba Keverem
+                <button class="modal-btn" style="background: #8b5cf6; color: white;" onclick="shuffleDiscardBackToDraw('random')">
+                    🔀 Húzópakliba Keverem
                 </button>
                 ${backBtn}
             `;
@@ -1433,16 +1173,13 @@
             const cardIndex = deck.hand.indexOf(cardImg);
             if (cardIndex > -1) {
                 saveState();
-                // Eltávolítjuk a kártyát a kézből
                 deck.hand.splice(cardIndex, 1);
                 
-                // Pozíció alapján helyezzük el a húzópakliban
                 if (position === 'top') {
                     deck.drawPile.unshift(cardImg);
                 } else if (position === 'bottom') {
                     deck.drawPile.push(cardImg);
                 } else {
-                    // Véletlenszerű pozícióba (régi működés)
                     const randomPosition = Math.floor(Math.random() * (deck.drawPile.length + 1));
                     deck.drawPile.splice(randomPosition, 0, cardImg);
                 }
@@ -1454,28 +1191,8 @@
             closeModal();
         }
 
-        function shuffleHandToDiscard() {
-            if (!currentModalCard || currentModalCard.source !== 'hand') return;
-            
-            const { deckId, cardImg } = currentModalCard;
-            const deck = decks.find(d => d.id === deckId);
-            if (!deck || !deck.hand) return;
-
-            const cardIndex = deck.hand.indexOf(cardImg);
-            if (cardIndex > -1) {
-                saveState();
-                // Eltávolítjuk a kártyát a kézből
-                deck.hand.splice(cardIndex, 1);
-                
-                // Véletlenszerű pozícióba helyezzük a dobópakliban
-                const randomPosition = Math.floor(Math.random() * (deck.discardPile.length + 1));
-                deck.discardPile.splice(randomPosition, 0, cardImg);
-                
-                renderDeck(deck);
-                renderHand();
-            }
-
-            closeModal();
+        function shuffleHandToDrawRandom() {
+            shuffleHandBackToDraw('random');
         }
 
         function moveDiscardToHand() {
@@ -1507,13 +1224,11 @@
             saveState();
             const card = deck.discardPile.splice(cardIndex, 1)[0];
             if (card) {
-                // Pozíció alapján helyezzük el a húzópakliban
                 if (position === 'top') {
                     deck.drawPile.unshift(card);
                 } else if (position === 'bottom') {
                     deck.drawPile.push(card);
                 } else {
-                    // Véletlenszerű pozícióba (régi működés)
                     const randomPosition = Math.floor(Math.random() * (deck.drawPile.length + 1));
                     deck.drawPile.splice(randomPosition, 0, card);
                 }
@@ -1523,33 +1238,11 @@
             closeModal();
         }
 
-        function shuffleDiscardWithinDiscard() {
-            if (!currentModalCard || currentModalCard.source !== 'discard') return;
-            
-            const { deckId, cardIndex } = currentModalCard;
-            const deck = decks.find(d => d.id === deckId);
-            if (!deck) return;
-
-            saveState();
-            const card = deck.discardPile.splice(cardIndex, 1)[0];
-            if (card) {
-                // Véletlenszerű pozícióba helyezzük vissza a dobópakliban
-                const randomPosition = Math.floor(Math.random() * (deck.discardPile.length + 1));
-                deck.discardPile.splice(randomPosition, 0, card);
-                renderDeck(deck);
-            }
-
-            closeModal();
-        }
-
-        // Close modal when clicking outside of it
-        // Fekete területre kattintva/érintve bezárjuk a modált (click + touch mobilon)
         const cardModalEl = document.getElementById('cardModal');
         cardModalEl.addEventListener('click', function(event) {
             if (event.target === this) closeModal();
         });
 
-        // Swipe gesztus kezelése
         let swipeTouchStartX = 0;
         let swipeTouchStartY = 0;
         let swipeTouchMoved = false;
@@ -1570,26 +1263,22 @@
             const absDx = Math.abs(dx);
             const absDy = Math.abs(dy);
 
-            // Csak akkor navigálunk, ha kézben lévő kártyát nézünk
             if (currentModalCard && currentModalCard.source === 'hand' && swipeTouchMoved) {
-                // Vízszintes swipe (legalább 50px, és inkább vízszintes mint függőleges)
                 if (absDx > 50 && absDx > absDy) {
                     if (dx < 0) {
-                        navigateCard(1);  // balra húzás → következő kártya
+                        navigateCard(1);
                     } else {
-                        navigateCard(-1); // jobbra húzás → előző kártya
+                        navigateCard(-1);
                     }
                     return;
                 }
             }
 
-            // Ha nem volt swipe mozgás és a háttérre tapintottak, zárjuk be
             if (!swipeTouchMoved && event.target === this) {
                 closeModal();
             }
         }, { passive: true });
 
-        // Keyboard navigation
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
@@ -1657,7 +1346,6 @@
                 </button>
             `;
             
-            // Hide navigation arrows
             document.getElementById('modalNavLeft').classList.add('hidden');
             document.getElementById('modalNavRight').classList.add('hidden');
             
@@ -1737,7 +1425,6 @@
                 </button>
             `;
             
-            // Hide navigation arrows for ability cards
             document.getElementById('modalNavLeft').classList.add('hidden');
             document.getElementById('modalNavRight').classList.add('hidden');
             
@@ -1807,8 +1494,6 @@
             showRevealedCardModal(deckId, bottomCard, 'bottom');
         }
 
-        let drawPileViewerDeckId = null;
-
         function viewDrawPile(deckId) {
             const deck = decks.find(d => d.id === deckId);
             if (!deck || deck.drawPile.length === 0) {
@@ -1816,7 +1501,6 @@
                 return;
             }
 
-            drawPileViewerDeckId = deckId;
             renderDrawPileModal(deck);
             document.getElementById('drawPileModal').style.display = 'block';
         }
@@ -1845,7 +1529,6 @@
 
         function closeDrawPileModal() {
             document.getElementById('drawPileModal').style.display = 'none';
-            drawPileViewerDeckId = null;
         }
 
         function showDrawPileCardModal(deckId, cardIndex, cardImg) {
@@ -1952,7 +1635,6 @@
                 </button>
             `;
             
-            // Hide navigation arrows for revealed cards
             document.getElementById('modalNavLeft').classList.add('hidden');
             document.getElementById('modalNavRight').classList.add('hidden');
             
@@ -1979,7 +1661,6 @@
         }
 
         function returnRevealedToDrawPile() {
-            // Just close the modal, card stays in its position
             closeModal();
         }
 
@@ -2008,7 +1689,6 @@
             renderHand();
         }
 
-        // Kezdő pakli létrehozása, vagy mentett állapot betöltése
         const hasSavedState = loadPersistedState();
         if (!hasSavedState || decks.length === 0) {
             const deck = createDeck();
@@ -2020,15 +1700,6 @@
         if (cardBackImage) {
             document.getElementById('card-back-status').textContent = '✅ Kártyahátlap feltöltve';
             document.getElementById('card-back-preview').innerHTML = `<img src="${cardBackImage}" alt="Kártyahátlap" onclick="showCardBackModal()">`;
-        }
-        // --- PWA: service worker + tartós tárhely ---
-        if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW hiba:', err));
-            });
-        }
-        if (navigator.storage && navigator.storage.persist) {
-            navigator.storage.persist().catch(() => {});
         }
     </script>
 </body>
